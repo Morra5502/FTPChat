@@ -1,16 +1,12 @@
-﻿// Client.cs
-using System;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.Text;
 namespace FTPChat;
 class Client
 {
     private const int Port = 83;
 
-    public static void Main()
+    public static void Start(string serverIp)
     {
-        Console.Write("Введите IP-адрес сервера: ");
-        string serverIp = Console.ReadLine();
 
         try
         {

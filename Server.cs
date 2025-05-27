@@ -9,7 +9,7 @@ class Server
 {
     private const int Port = 83;
 
-    public static void Main()
+    public static void Start()
     {
         TcpListener listener = null;
         try
