@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTPChat", "FTPChat.csproj", "{A90D290A-A4A5-4225-8E79-B133333C19DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A90D290A-A4A5-4225-8E79-B133333C19DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A90D290A-A4A5-4225-8E79-B133333C19DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A90D290A-A4A5-4225-8E79-B133333C19DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A90D290A-A4A5-4225-8E79-B133333C19DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B10C97AC-0E4C-4867-9DC8-037FE0F43382}
+	EndGlobalSection
+EndGlobal
