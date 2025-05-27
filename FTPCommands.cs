@@ -1,25 +1,31 @@
-﻿namespace FTPChat
+﻿namespace FTPChat;
+
+public class UserCommand : ICommand
 {
-    // FTPCommands.cs
-    public static class FTPCommandHandler
-    {
-        public static string Process(string command)
-        {
-            string[] parts = command.Split(' ', 2);
-            string cmd = parts[0].ToUpperInvariant();
-            string arg = parts.Length > 1 ? parts[1] : "";
+    public string Execute(string argument) => "ОК: имя пользователя принято";
+}
 
-            return cmd switch
-            {
-                "USER" => "ОК: имя пользователя принято",
-                "PASS" => "ОК: пароль принят",
-                "LIST" => "Файлы: file1.txt, file2.txt",
-                "RETR" => $"Передача файла: {arg}",
-                "STOR" => $"Файл {arg} принят",
-                "BYE" => "Сеанс завершён",
-                _ => "Неизвестная команда"
-            };
-        }
-    }
+public class PassCommand : ICommand
+{
+    public string Execute(string argument) => "ОК: пароль принят";
+}
 
+public class ListCommand : ICommand
+{
+    public string Execute(string argument) => "Файлы: file1.txt, file2.txt";
+}
+
+public class RetrCommand : ICommand
+{
+    public string Execute(string argument) => $"Передача файла: {argument}";
+}
+
+public class StorCommand : ICommand
+{
+    public string Execute(string argument) => $"Файл {argument} принят";
+}
+
+public class ByeCommand : ICommand
+{
+    public string Execute(string argument) => "Сеанс завершён";
 }
