@@ -1,72 +1,71 @@
-﻿using System.Net.Sockets;
-using System.Text;
+﻿// --- Client.cs ---
+using System.Net.Sockets;         // Пространство имён для TCP-клиентов и сетевых потоков.
+using System.Text;                // Для преобразования строк в байты и наоборот.
 
-namespace FTPChat;
+namespace FTPChat;                // Пространство имён для логической организации классов.
 
-class Client
+class Client                      // Класс, реализующий клиентскую часть TCP-чата.
 {
-    private const int Port = 83;
+    private const int Port = 83;  // Порт подключения к серверу (должен совпадать с серверным).
 
-    public static void Start()
+    public static void Start()    // Метод запуска клиента.
     {
-        Console.Write("Введите IP-адрес сервера: ");
-        string serverIp = Console.ReadLine();
+        //Console.Write("Введите IP-адрес сервера: ");
+        //string serverIp = Console.ReadLine();             // Получение IP-адреса от пользователя.
+
+        string serverIp = "127.0.0.1";
 
         try
         {
-            TcpClient client = new TcpClient(serverIp, Port);
-            NetworkStream stream = client.GetStream();
+            TcpClient client = new TcpClient(serverIp, Port); // Подключение к серверу по IP и порту.
+            NetworkStream stream = client.GetStream();        // Получение сетевого потока для общения.
 
-            // Поток для чтения сообщений от сервера
-            Thread readThread = new Thread(() => ReadMessages(stream));
+            Thread readThread = new Thread(() => ReadMessages(stream)); // Создание потока для чтения сообщений.
             readThread.Start();
 
             Console.WriteLine("Введите сообщения (bye — выход):");
             while (true)
             {
-                string messageToSend = Console.ReadLine();
-                if (string.IsNullOrEmpty(messageToSend))
-                    continue;
+                string messageToSend = Console.ReadLine();   // Ввод сообщения пользователем.
+                if (string.IsNullOrEmpty(messageToSend)) continue;
 
-                byte[] data = Encoding.UTF8.GetBytes(messageToSend);
-                stream.Write(data, 0, data.Length);
+                byte[] data = Encoding.UTF8.GetBytes(messageToSend); // Кодирование сообщения в байты.
+                stream.Write(data, 0, data.Length);                  // Отправка данных серверу.
 
-                if (messageToSend.ToLower() == "bye")
-                    break;
+                if (messageToSend.ToLower() == "bye") break;        // Завершение при команде "bye".
             }
 
-            readThread.Join();
-            stream.Close();
-            client.Close();
+            readThread.Join();   // Ожидание завершения потока чтения.
+            stream.Close();      // Закрытие потока.
+            client.Close();      // Закрытие подключения.
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Ошибка клиента: {ex.Message}");
+            Console.WriteLine($"Ошибка клиента: {ex.Message}");  // Вывод сообщения об ошибке.
         }
 
         Console.WriteLine("Клиент завершил работу.");
     }
 
-    static void ReadMessages(NetworkStream stream)
+    static void ReadMessages(NetworkStream stream)     // Метод чтения сообщений от сервера.
     {
-        byte[] buffer = new byte[512];
+        byte[] buffer = new byte[512];                 // Буфер для приёма данных.
         try
         {
             while (true)
             {
-                int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                if (bytesRead == 0) break;
+                int bytesRead = stream.Read(buffer, 0, buffer.Length); // Чтение данных из потока.
+                if (bytesRead == 0) break;            // Если ничего не прочитано — сервер отключился.
 
-                string received = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                Console.WriteLine($"Сервер: {received}");
+                string received = Encoding.UTF8.GetString(buffer, 0, bytesRead); // Декодирование сообщения.
+                Console.WriteLine($"Сервер: {received}");                        // Вывод на экран.
 
-                if (received.Trim().ToLower() == "bye")
-                    break;
+                if (received.Trim().ToLower() == "bye") break;                 // Завершение при команде.
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Ошибка чтения от сервера: {ex.Message}");
+            Console.WriteLine($"Ошибка чтения от сервера: {ex.Message}"); // Обработка исключений.
         }
     }
 }
